@@ -604,8 +604,10 @@ public abstract class NonStickySessionsIntegrationTest {
         final String sessionId1 = post( _httpClient, TC_PORT_1, null, "key", "v1" ).getSessionId();
         assertNotNull( sessionId1 );
 
+        System.out.println("***************************** after post ("+ sessionId1 +"), waiting testNonStickySessionSecondaryBackupFailoverForSkippedUpdate");
+
         // the memcached client writes async, so it's ok to wait a little bit (especially on windows)
-        waitForMemcachedClient( 2000 );
+        waitForMemcachedClient( 4000 );
 
         final SessionIdFormat fmt = new SessionIdFormat();
 
@@ -617,7 +619,7 @@ public abstract class NonStickySessionsIntegrationTest {
         assertNotNull( first.getCache().get( key( createValidityInfoKeyName( sessionId1 ) ) )[0] );
 
         // The executor needs some time to finish the backup...
-        Thread.sleep( 2000 );
+        // Thread.sleep( 2000 );
 
         final MemCacheDaemon<?> second = memcachedsByNodeId.get(nodeIdList.getNextNodeId(nodeId));
         assertNotNull( second.getCache().get( key( fmt.createBackupKey( sessionId1 ) ) )[0] );
