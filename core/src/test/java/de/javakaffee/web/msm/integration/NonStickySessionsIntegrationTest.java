@@ -684,6 +684,8 @@ public abstract class NonStickySessionsIntegrationTest {
     @Test( enabled = true )
     public void testSessionNotLoadedForReadonlyRequest() throws IOException, HttpException, InterruptedException {
         getManager( _tomcat1 ).setMemcachedNodes( NODE_ID_1 + ":localhost:" + MEMCACHED_PORT_1 );
+        System.out.println("***************************** waiting for memcached reconfiguration *******************************");
+        Thread.sleep( 2000 );
         try {
 
             System.out.println("***************************** before post *******************************");
