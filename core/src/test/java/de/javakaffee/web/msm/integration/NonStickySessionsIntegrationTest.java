@@ -592,6 +592,9 @@ public abstract class NonStickySessionsIntegrationTest {
         getManager(_tomcat1).setMemcachedNodes(memcachedNodes);
         getManager(_tomcat1).getMemcachedSessionService().setSessionBackupAsync(false);
 
+        System.out.println("***************************** waiting for memcached reconfiguration *******************************");
+        Thread.sleep( 2000 );
+
         final NodeIdList nodeIdList = NodeIdList.create(NODE_ID_1, NODE_ID_2, NODE_ID_3);
         final Map<String, MemCacheDaemon<?>> memcachedsByNodeId = new HashMap<String, MemCacheDaemon<?>>();
         memcachedsByNodeId.put(NODE_ID_1, _daemon1);
